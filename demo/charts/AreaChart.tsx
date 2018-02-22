@@ -5,11 +5,11 @@ import { Chart, ChartRenderer } from "../../src/Chart";
 const points = dataBank().points.attentionSpanOverTime;
 const options = dataBank().options;
 
-export const ScatterChart = () => {
+export const AreaChart = () => {
   return (
     <Chart
       points={points}
-      type="ScatterChart"
+      type="AreaChart"
       options={options}
       onReady={() => {
         console.warn("onReady");

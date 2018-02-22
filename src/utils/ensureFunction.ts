@@ -1,5 +1,7 @@
-import { isFunction } from './isFunction'
+import { isFunction } from "./isFunction";
 
-export const ensureFunction = (maybeFunction = (a: any) => null) => {
-  return isFunction(maybeFunction) ? maybeFunction : (a: any) => null
-}
+export type ensureFunctionArg = any;
+
+export const ensureFunction = (maybeFunction: ensureFunctionArg) => {
+  return isFunction(maybeFunction) ? maybeFunction : (a: any) => null;
+};

@@ -1,44 +1,46 @@
-import * as React from 'react'
+import * as React from "react";
 
-import { isFunction } from '../utils/isFunction'
-
+import { isFunction } from "../utils/isFunction";
+import { ensureFunction } from "../utils/ensureFunction";
 import {
   GoogleChartWrapperChartType,
   ChartWrapperProps,
-  GoogleChartWrapper
-} from '../types'
-
-let i = 0
-
-const getID = () => {
-  let containerID = `google_chart_div_${i}`
-  i += 1
-  return containerID
-}
+  GoogleChartWrapper,
+  GoogleDataTable,
+  GoogleArrayToDataTable
+} from "../types";
 
 class ChartWrapper extends React.Component<ChartWrapperProps, {}> {
-  chartWrapper: GoogleChartWrapper
+  // @ts-ignore
+  chartWrapper: GoogleChartWrapper;
+  // @ts-ignore
+  arrayToDataTable: GoogleArrayToDataTable;
   static defaultProps = {
     chartType: GoogleChartWrapperChartType.ColumnChart,
     dataTable: [[]],
     options: {},
-    dataSourceUrl: '',
-    query: '',
-    refreshInterval: '',
+    dataSourceUrl: "",
+    query: "",
+    refreshInterval: "",
     view: null,
     render: () => null,
-    children: null
-  }
+    children: null,
+    onReady: (
+      chartWrapper: GoogleChartWrapper,
+      dataTable: GoogleDataTable | null
+    ) => {}
+  };
 
   constructor(props: ChartWrapperProps) {
-    super(props)
+    super(props);
+
     // this.chartWrapper = {} as GoogleChartWrapper
-    const { chartType, dataTable, options, containerId } = this.props
-    if ('google' in window === false) {
+    const { chartType, dataTable, options, containerId, onReady } = this.props;
+    if ("google" in window === false) {
       console.error(
-        'ChartWrapper was rendered before google was loaded in window'
-      )
-      return
+        "ChartWrapper was rendered before google was loaded in window"
+      );
+      return;
     }
     // @ts-ignore
     this.chartWrapper = new window.google.visualization.ChartWrapper({
@@ -46,25 +48,37 @@ class ChartWrapper extends React.Component<ChartWrapperProps, {}> {
       dataTable,
       options,
       containerId
-    })
+    });
+    const vOnReady = ensureFunction(onReady);
+
+    // @ts-ignore
+    this.arrayToDataTable = window.google.visualization.arrayToDataTable.bind(
+      window.google.visualization
+    );
+    vOnReady(
+      this.chartWrapper,
+      this.chartWrapper.getDataTable(),
+      this.arrayToDataTable
+    );
   }
   componentDidMount() {
-    this.chartWrapper.draw()
+    this.chartWrapper.draw();
   }
   componentDidUpdate() {
-    const { chartType, dataTable, options, containerId } = this.props
-    this.chartWrapper.setDataTable(dataTable)
-    this.chartWrapper.setChartType(chartType)
-    this.chartWrapper.setContainerId(containerId as string)
-    this.chartWrapper.setOptions(options)
-    this.chartWrapper.draw()
+    const { chartType, dataTable, options, containerId } = this.props;
+    this.chartWrapper.setDataTable(dataTable);
+    this.chartWrapper.setChartType(chartType);
+    this.chartWrapper.setContainerId(containerId as string);
+    this.chartWrapper.setOptions(options);
+    this.chartWrapper.draw();
   }
   render() {
-    const { render = () => null, children } = this.props
+    const { render = () => null, children } = this.props;
     const childrenRenderer = (isFunction(children) ? children : render) as (
       props: ChartWrapperProps,
-      chartWrapper: GoogleChartWrapper
-    ) => any
+      chartWrapper: GoogleChartWrapper,
+      arrayToDataTable: GoogleArrayToDataTable
+    ) => any;
     return [
       <div
         id={`${this.props.containerId}`}
@@ -74,10 +88,10 @@ class ChartWrapper extends React.Component<ChartWrapperProps, {}> {
         id={`META_CHART_${this.props.containerId}`}
         key={`META_CHART_${this.props.containerId}`}
       >
-        {childrenRenderer(this.props, this.chartWrapper)}
+        {childrenRenderer(this.props, this.chartWrapper, this.arrayToDataTable)}
       </div>
-    ]
+    ];
   }
 }
 
-export default ChartWrapper
+export default ChartWrapper;
