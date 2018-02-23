@@ -1,53 +1,50 @@
-import * as React from 'react'
-import { isFunction } from '../utils/isFunction'
+import * as React from "react";
 import {
-  GoogleChartWrapperChartType,
-  ChartWrapperProps,
   GoogleChartWrapper,
   GoogleVizEventName,
   GoogleVizEvents,
   VizEventsProps
-} from '../types'
+} from "../types";
 
 class VizEvents extends React.Component<VizEventsProps, {}> {
-  chartWrapper: GoogleChartWrapper
+  chartWrapper: GoogleChartWrapper;
   static defaultProps = {
     chartWrapper: {},
     onReady: () => null,
     onError: () => null,
     onSelect: () => null,
-    render: (props: VizEventsProps, chartWrapper: GoogleChartWrapper) => {
-      return null
+    render: () => {
+      return null;
     },
     children: null
-  }
+  };
   constructor(props: VizEventsProps) {
-    super(props)
-    this.chartWrapper = {} as GoogleChartWrapper
+    super(props);
+    this.chartWrapper = {} as GoogleChartWrapper;
   }
   componentDidMount() {
-    this.unbindVizEvents()
-    this.bindVizEvents()
+    this.unbindVizEvents();
+    this.bindVizEvents();
   }
   componentDidUpdate() {
-    this.unbindVizEvents()
-    this.bindVizEvents()
+    this.unbindVizEvents();
+    this.bindVizEvents();
   }
   componentWillUnmount() {
-    this.unbindVizEvents()
+    this.unbindVizEvents();
   }
   render() {
-    const { render = () => null, children } = this.props
-    const childrenRenderer = isFunction(children) ? children : render
-    return render(this.props, this.chartWrapper)
+    const { render = () => null } = this.props;
+    // const childrenRenderer = isFunction(children) ? children : render;
+    return render(this.props, this.chartWrapper);
   }
   unbindVizEvents() {
-    const { chartWrapper } = this.props
-    if (chartWrapper === null) return
-    if (!('google' in window)) return
+    const { chartWrapper } = this.props;
+    if (chartWrapper === null) return;
+    if (!("google" in window)) return;
     // @ts-ignore
-    const viz = window.google.visualization.events as GoogleVizEvents
-    viz.removeAllListeners(chartWrapper)
+    const viz = window.google.visualization.events as GoogleVizEvents;
+    viz.removeAllListeners(chartWrapper);
   }
   bindVizEvents() {
     const {
@@ -55,30 +52,30 @@ class VizEvents extends React.Component<VizEventsProps, {}> {
       onReady = () => {},
       onError = () => {},
       onSelect = () => {}
-    } = this.props
-    if (chartWrapper === null) return
-    if (!('google' in window)) return
+    } = this.props;
+    if (chartWrapper === null) return;
+    if (!("google" in window)) return;
     // @ts-ignore
-    const viz = window.google.visualization.events as GoogleVizEvents
+    const viz = window.google.visualization.events as GoogleVizEvents;
     // viz.removeAllListeners(chartWrapper)
 
     if (onReady !== null) {
       viz.addListener(chartWrapper, GoogleVizEventName.ready, () => {
-        onReady(chartWrapper)
-      })
+        onReady(chartWrapper);
+      });
     }
     if (onError !== null) {
       viz.addListener(chartWrapper, GoogleVizEventName.error, () => {
-        onError(chartWrapper)
-      })
+        onError(chartWrapper);
+      });
     }
     if (onSelect !== null) {
       viz.addListener(chartWrapper, GoogleVizEventName.select, () => {
-        onSelect(chartWrapper.getChart().getSelection())
-      })
+        onSelect(chartWrapper.getChart().getSelection());
+      });
     }
   }
 }
 
-export { VizEvents }
-export default VizEvents
+export { VizEvents };
+export default VizEvents;

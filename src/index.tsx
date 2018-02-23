@@ -1,7 +1,15 @@
-import GoogleChartLoader from './GoogleChartLoader'
-import ChartWrapper from './google-visualization/ChartWrapper'
-import { VizEvents } from './google-visualization/Events'
+import GoogleChartLoader from "./GoogleChartLoader";
+import ChartWrapper from "./google-visualization/ChartWrapper";
+import { VizEvents } from "./google-visualization/Events";
+import { Chart, ChartRenderer } from "./Chart";
 
-export { GoogleChartLoader, ChartWrapper, VizEvents }
-export default { GoogleChartLoader, ChartWrapper, VizEvents }
-export * from './types'
+export { GoogleChartLoader, ChartWrapper, VizEvents, Chart, ChartRenderer };
+export default {
+  GoogleChartLoader,
+  ChartWrapper,
+  VizEvents,
+  Chart,
+  ChartRenderer
+};
+
+export * from "./types";

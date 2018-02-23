@@ -194,7 +194,7 @@ export enum GoogleChartPackages {
   wordtree = "wordtree"
 }
 
-enum GoogleChartVersion {
+export enum GoogleChartVersion {
   current = "current",
   upcoming = "upcoming"
 }

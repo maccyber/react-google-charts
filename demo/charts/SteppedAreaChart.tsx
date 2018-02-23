@@ -1,10 +1,7 @@
 import * as React from "react";
-import { dataBank } from "../dataBank";
-import { Chart, ChartRenderer } from "../../src/Chart";
-import { GoogleDataTableColumnType } from "../../src";
+import { ChartRenderer } from "../../src/Chart";
 
 // Ref : https://developers.google.com/chart/interactive/docs/gallery/steppedareachart
-
 export const SteppedAreaChart = () => {
   return (
     <ChartRenderer

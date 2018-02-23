@@ -52,9 +52,7 @@ class ChartWrapper extends React.Component<ChartWrapperProps, {}> {
     const vOnReady = ensureFunction(onReady);
 
     // @ts-ignore
-    this.arrayToDataTable = window.google.visualization.arrayToDataTable.bind(
-      window.google.visualization
-    );
+    this.arrayToDataTable = window.google.visualization.arrayToDataTable;
     vOnReady(
       this.chartWrapper,
       this.chartWrapper.getDataTable(),
@@ -65,8 +63,7 @@ class ChartWrapper extends React.Component<ChartWrapperProps, {}> {
     this.chartWrapper.draw();
   }
   componentDidUpdate() {
-    const { chartType, dataTable, options, containerId } = this.props;
-    this.chartWrapper.setDataTable(dataTable);
+    const { chartType, options, containerId } = this.props;
     this.chartWrapper.setChartType(chartType);
     this.chartWrapper.setContainerId(containerId as string);
     this.chartWrapper.setOptions(options);

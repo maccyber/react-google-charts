@@ -1,10 +1,6 @@
 import * as React from "react";
-import { dataBank } from "../dataBank";
-import { Chart, ChartRenderer } from "../../src/Chart";
-import {
-  GoogleDataTableColumnType,
-  GoogleDataTableColumnRoleType
-} from "../../src";
+import { ChartRenderer } from "../../src/Chart";
+import { GoogleDataTableColumnType } from "../../src";
 
 const daysToMilliseconds = days => {
   return days * 24 * 60 * 60 * 1000;

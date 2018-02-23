@@ -1,6 +1,6 @@
 import * as React from "react";
 import { dataBank } from "../dataBank";
-import { Chart, ChartRenderer } from "../../src/Chart";
+import { Chart } from "../../src/Chart";
 
 const points = dataBank().points.attentionSpanOverTime;
 const options = dataBank().options;

@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel ./demo/index.html --open",
-    "build": "rm -rf ./build/ && rm -rf ./dist/ && tsc && microbundle build/main.js",
+    "build": "rm -rf ./build/ && rm -rf ./dist/ && tsc && microbundle build/index.js",
     "test": "jest --watch --coverage"
   },
   "devDependencies": {
@@ -18,9 +18,12 @@
     "jest": "^22.3.0",
     "microbundle": "^0.4.3",
     "parcel-bundler": "^1.6.1",
+    "prettier": "^1.9.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
     "react-test-renderer": "^16.2.0",
+    "typedoc": "^0.10.0",
     "typescript": "^2.7.2"
   },
   "peerDependencies": {

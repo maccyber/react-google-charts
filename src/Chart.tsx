@@ -48,8 +48,6 @@ export type ChartRendererProps = {
   onSelect?: (selection: any) => any;
 };
 
-const getGooglePackagesFromChartName = (chartName: string) => {};
-
 const getChartTypeFromChartName = (chartName: string) => {
   if (chartName in GoogleChartWrapperChartType) {
     return GoogleChartWrapperChartType[
@@ -71,7 +69,7 @@ const padRight = (input: any[] = [], desiredLength = 0) => {
 };
 
 const getDataTableArrayFromDataPoints = (points: any[]) => {
-  const pointsIndexedByY = indexBy(points, "y");
+  // const pointsIndexedByY = indexBy(points, "y");
   const pointsIndexedByX = indexBy(points, "x");
   const pointsIndexedByLabel = indexBy(points, "label");
   let rows = Array.from(pointsIndexedByX.keys()).map((x, i) => {
@@ -130,9 +128,7 @@ export class Chart extends React.Component<ChartProps, {}> {
       onSelect
     } = this.props;
     const chartType = getChartTypeFromChartName(type);
-    const { rows, columns, dataTable } = getDataTableArrayFromDataPoints(
-      points
-    );
+    const { dataTable } = getDataTableArrayFromDataPoints(points);
     const packages = [GoogleChartPackages.corechart];
     return (
       <GoogleChartLoader
@@ -167,13 +163,13 @@ export class ChartRenderer extends React.Component<ChartRendererProps, {}> {
   };
   constructor(props: ChartProps) {
     super(props);
-    const { containerId = null, type } = props;
+    const { containerId = null } = props;
     this.containerId =
       containerId !== null ? containerId : `google_chart_${generateID()}`;
   }
   render() {
     const packages = [GoogleChartPackages.corechart];
-    const { type, options, onReady, onError, onSelect } = this.props;
+    const { type, options, onReady } = this.props;
     const vOnReady = ensureFunction(onReady);
     const chartType = getChartTypeFromChartName(type);
     return (
@@ -190,8 +186,10 @@ export class ChartRenderer extends React.Component<ChartRendererProps, {}> {
               chartDataTable: GoogleDataTable,
               arrayToDataTable: GoogleArrayToDataTable
             ) => {
-              console.warn({ arrayToDataTable });
               vOnReady(chartWrapper, chartDataTable, arrayToDataTable);
+            }}
+            render={() => {
+              console.warn("Rendering");
             }}
           />
         )}

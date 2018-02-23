@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Chart, ChartRenderer } from "../../src/Chart";
+import { ChartRenderer } from "../../src/Chart";
 
 // Ref : https://developers.google.com/chart/interactive/docs/gallery/gauge
 export class GaugeChart extends React.Component<{}, {}> {
@@ -10,7 +10,7 @@ export class GaugeChart extends React.Component<{}, {}> {
       setInterval(function() {
         dataTable.setValue(0, 1, 40 + Math.round(60 * Math.random()));
         chartWrapper.draw();
-      }, 1300)
+      }, 13000)
     );
     this.intervalIDs.push(
       setInterval(function() {
@@ -22,7 +22,7 @@ export class GaugeChart extends React.Component<{}, {}> {
       setInterval(function() {
         dataTable.setValue(2, 1, 40 + Math.round(60 * Math.random()));
         chartWrapper.draw();
-      }, 2000)
+      }, 20000)
     );
   };
   componentWillUnmount() {
