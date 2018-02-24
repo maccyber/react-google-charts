@@ -1,12 +1,12 @@
 //@ts-ignore
-import * as script from "loadjs";
+import loadjs from "loadjs";
 
 let scriptLoaderPromise: null | Promise<any> = null;
 
 export const loadRemoteScript = async () => {
   if (scriptLoaderPromise !== null) return scriptLoaderPromise;
   scriptLoaderPromise = new Promise((resolve, reject) =>
-    script("https://www.gstatic.com/charts/loader.js", {
+    loadjs("https://www.gstatic.com/charts/loader.js", {
       success: resolve,
       error: reject
     })

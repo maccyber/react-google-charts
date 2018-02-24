@@ -1,55 +1,17 @@
+export type ChartFromPointsProps = {
+  type: string;
+  options?: GoogleChartOptions;
+  points?: Array<{ x: any; y: any; label: any; type: string }>;
+  containerId?: string;
+  onReady?: () => any;
+  onError?: () => any;
+  onSelect?: (selection: any) => any;
+};
+
 export interface ChartWrapperProps {
   chartType: GoogleChartWrapperChartType;
   containerId?: string;
-  options?: {
-    width?: number;
-    height?: number;
-    is3D?: boolean;
-    title?: string;
-    hAxis?: {
-      minValue?: number;
-      ticks?: number[];
-      title?: string;
-    };
-    vAxis?: {
-      minValue?: number;
-      ticks?: number[];
-      title?: string;
-    };
-    bubble?: {};
-    pieHole?: number;
-    redFrom?: number;
-    redTo?: number;
-    yellowFrom?: number;
-    yellowTo?: number;
-    minorTicks?: number;
-    legend?:
-      | string
-      | {
-          position?: string;
-          maxLines?: number;
-        };
-    curveType?: string;
-    showTooltip?: boolean;
-    showInfoWindow?: boolean;
-    allowHtml?: boolean;
-    isStacked?: string | boolean;
-    minColor?: string;
-    midColor?: string;
-    maxColor?: string;
-    headerHeight?: number;
-    fontColor?: string;
-    showScale?: boolean;
-    bar?: { groupWidth?: string }; // Remove space between bars.
-    candlestick?: {
-      fallingColor?: { strokeWidth?: number; fill?: string }; // red
-      risingColor?: { strokeWidth?: number; fill?: string }; // green
-    };
-    wordtree?: {
-      format?: string;
-      word?: string;
-    };
-  };
+  options?: GoogleChartOptions;
   dataTable?: {};
   dataSourceUrl?: string;
   query?: string;
@@ -74,6 +36,37 @@ export type VizEventsProps = {
   onSelect?: (selection: Array<{ row?: any; column?: any }>) => any;
   render?: (props: VizEventsProps, chartWrapper: GoogleChartWrapper) => any;
   children?: (props: VizEventsProps, chartWrapper: GoogleChartWrapper) => any;
+};
+
+export type ChartFromDataTableProps = {
+  dataTable: any[][];
+  options: GoogleChartOptions;
+  containerId?: string | undefined;
+  type: string;
+};
+
+export type GoogleChartLoaderProps = {
+  window?: any;
+  version?: string | GoogleChartVersion;
+  language?: string;
+  packages?: GoogleChartPackages[];
+  mapsApiKey?: string;
+  render: (propsAndState: GoogleChartLoaderPropsAndState) => any;
+  renderChart?: (propsAndState: GoogleChartLoaderPropsAndState) => any;
+  renderLoader?: (propsAndState: GoogleChartLoaderPropsAndState) => any;
+  renderError?: (propsAndState: GoogleChartLoaderPropsAndState) => any;
+};
+
+export type GoogleChartLoaderPropsAndState = {
+  props: GoogleChartLoaderProps;
+  state: GoogleChartLoaderState;
+};
+
+export type GoogleChartLoaderState = {
+  isLoaded: boolean;
+  isLoading: boolean;
+  hasErrored: boolean;
+  errorMessage: string;
 };
 
 /* 
@@ -355,6 +348,56 @@ export type GoogleArrayToDataTable = (
   data: any[][],
   isFirstRowLabels?: boolean
 ) => GoogleDataTable;
+
+export type GoogleChartOptions = {
+  width?: number;
+  height?: number;
+  is3D?: boolean;
+  title?: string;
+  hAxis?: {
+    minValue?: number;
+    ticks?: number[];
+    title?: string;
+  };
+  vAxis?: {
+    minValue?: number;
+    ticks?: number[];
+    title?: string;
+  };
+  bubble?: {};
+  pieHole?: number;
+  redFrom?: number;
+  redTo?: number;
+  yellowFrom?: number;
+  yellowTo?: number;
+  minorTicks?: number;
+  legend?:
+    | string
+    | {
+        position?: string;
+        maxLines?: number;
+      };
+  curveType?: string;
+  showTooltip?: boolean;
+  showInfoWindow?: boolean;
+  allowHtml?: boolean;
+  isStacked?: string | boolean;
+  minColor?: string;
+  midColor?: string;
+  maxColor?: string;
+  headerHeight?: number;
+  fontColor?: string;
+  showScale?: boolean;
+  bar?: { groupWidth?: string }; // Remove space between bars.
+  candlestick?: {
+    fallingColor?: { strokeWidth?: number; fill?: string }; // red
+    risingColor?: { strokeWidth?: number; fill?: string }; // green
+  };
+  wordtree?: {
+    format?: string;
+    word?: string;
+  };
+};
 
 /* 
 *

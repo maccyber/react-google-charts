@@ -1,14 +1,12 @@
-import GoogleChartLoader from "./GoogleChartLoader";
-import ChartWrapper from "./google-visualization/ChartWrapper";
-import { VizEvents } from "./google-visualization/Events";
-import { Chart, ChartRenderer } from "./Chart";
+import { GoogleChartLoader } from "./GoogleChartLoader";
+import { ChartFromDataTable } from "./ChartFromDataTable";
+import { ChartFromPoints } from "./ChartFromPoints";
+import { ChartRenderer } from "./ChartRenderer";
 
-export { GoogleChartLoader, ChartWrapper, VizEvents, Chart, ChartRenderer };
-export default {
+export {
+  ChartFromPoints,
   GoogleChartLoader,
-  ChartWrapper,
-  VizEvents,
-  Chart,
+  ChartFromDataTable,
   ChartRenderer
 };
 

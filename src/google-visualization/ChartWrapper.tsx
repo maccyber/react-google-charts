@@ -59,15 +59,20 @@ class ChartWrapper extends React.Component<ChartWrapperProps, {}> {
       this.arrayToDataTable
     );
   }
+  componentDidCatch() {
+    console.warn("Error");
+  }
   componentDidMount() {
+    console.log(`Mounting ChartWrapper`);
     this.chartWrapper.draw();
   }
   componentDidUpdate() {
-    const { chartType, options, containerId } = this.props;
-    this.chartWrapper.setChartType(chartType);
-    this.chartWrapper.setContainerId(containerId as string);
-    this.chartWrapper.setOptions(options);
-    this.chartWrapper.draw();
+    console.log(`Updating ChartWrapper`);
+    // const { chartType, options, containerId } = this.props;
+    // this.chartWrapper.setChartType(chartType);
+    // this.chartWrapper.setContainerId(containerId as string);
+    // this.chartWrapper.setOptions(options);
+    // this.chartWrapper.draw();
   }
   render() {
     const { render = () => null, children } = this.props;
@@ -90,5 +95,5 @@ class ChartWrapper extends React.Component<ChartWrapperProps, {}> {
     ];
   }
 }
-
+export { ChartWrapper };
 export default ChartWrapper;

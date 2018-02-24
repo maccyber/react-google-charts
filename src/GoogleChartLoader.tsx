@@ -1,50 +1,13 @@
 import * as React from "react";
 
+import {
+  GoogleChartLoaderProps,
+  GoogleChartLoaderPropsAndState,
+  GoogleChartLoaderState
+} from "./types";
+
 import { loadGoogleScripts } from "./loadGoogleScripts";
 import { isFunction } from "./utils/isFunction";
-type GoogleChartLoaderState = {
-  isLoaded: boolean;
-  isLoading: boolean;
-  hasErrored: boolean;
-  errorMessage: string;
-};
-
-enum GoogleChartPackages {
-  corechart = "corechart",
-  calendar = "calendar",
-  gantt = "gantt",
-  gauge = "gauge",
-  geochart = "geochart",
-  map = "map",
-  orgchart = "orgchart",
-  sankey = "sankey",
-  table = "table",
-  timeline = "timeline",
-  treemap = "treemap",
-  wordtree = "wordtree"
-}
-
-enum GoogleChartVersion {
-  current = "current",
-  upcoming = "upcoming"
-}
-
-type GoogleChartLoaderPropsAndState = {
-  props: GoogleChartLoaderProps;
-  state: GoogleChartLoaderState;
-};
-
-type GoogleChartLoaderProps = {
-  window?: any;
-  version?: string | GoogleChartVersion;
-  language?: string;
-  packages?: Array<GoogleChartPackages>;
-  mapsApiKey?: string;
-  render: (propsAndState: GoogleChartLoaderPropsAndState) => any;
-  renderChart?: (propsAndState: GoogleChartLoaderPropsAndState) => any;
-  renderLoader?: (propsAndState: GoogleChartLoaderPropsAndState) => any;
-  renderError?: (propsAndState: GoogleChartLoaderPropsAndState) => any;
-};
 
 const ensureFunction = (maybeFunction = (a: any) => null) => {
   return isFunction(maybeFunction) ? maybeFunction : (a: any) => null;
@@ -98,21 +61,20 @@ class GoogleChartLoader extends React.Component<
     });
     renderError({ props: this.props, state: this.state });
   };
-  async componentDidMount() {
+  componentDidMount() {
     const { window } = this.props;
 
     this.setState({ isLoading: true });
-    try {
-      await loadGoogleScripts({ window });
-    } catch (err) {
-      this.handleError(err.message);
-    }
-    try {
-      await this.loadGoogleCharts();
-      this.setState({ isLoading: false, isLoaded: true });
-    } catch (err) {
-      this.handleError(err.message);
-    }
+    loadGoogleScripts({ window })
+      .then(() => {
+        return this.loadGoogleCharts();
+      })
+      .then(() => {
+        this.setState({ isLoading: false, isLoaded: true });
+      })
+      .catch(err => {
+        this.handleError(err.message);
+      });
   }
   render() {
     const { props, state } = this;
