@@ -8,6 +8,8 @@
     "start": "parcel demo/public/dev/index.html",
     "build":
       "rm -rf ./build/ && rm -rf ./dist/ && tsc && node build-scripts/build-bundles.js",
+    "test:ci":
+      "(npm start &) && $(npm bin)/wait-on http://localhost:1234/ && $(npm bin)/cypress run",
     "test": "cypress open"
   },
   "devDependencies": {
@@ -25,7 +27,8 @@
     "react-test-renderer": "^16.2.0",
     "rollup": "^0.56.2",
     "typedoc": "^0.10.0",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
+    "wait-on": "^2.1.0"
   },
   "peerDependencies": {
     "react": ">= 16.0.0"
