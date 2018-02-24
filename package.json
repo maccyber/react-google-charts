@@ -8,6 +8,7 @@
     "start": "parcel demo/public/dev/index.html",
     "build":
       "rm -rf ./build/ && rm -rf ./dist/ && tsc && node build-scripts/build-bundles.js",
+
     "test:ci":
       "(npm start &) && $(npm bin)/wait-on http://localhost:1234/ && $(npm bin)/cypress run",
     "test": "cypress open"
