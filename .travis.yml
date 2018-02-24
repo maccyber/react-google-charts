@@ -8,4 +8,4 @@ cache:
 install:
   - npm install
 script:
-  - npm test:ci
+  - npm run test:ci --record --key 992c387d-9654-42ea-aad7-bb51e16aec9b
