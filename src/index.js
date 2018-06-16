@@ -361,7 +361,7 @@ class Chart extends Component {
         this.wrapper.getDataTable()
       );
       const columnCount = view.getNumberOfColumns();
-      let colors = [];
+      let colors = this.props.options && this.props.options.colors ? this.props.options.colors : DEFAULT_CHART_COLORS;
       let columns = [];
       for (let i = 0; i < columnCount; i += 1) {
         if (i === 0) {
